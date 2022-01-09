@@ -28,7 +28,6 @@ const ListMovie = (props) => {
                 </span>{" "}
                 <Moment format="MMMM D, YYYY">{movie.release_date}</Moment>
               </p>
-              {/* <p><span className="movie-rating font-weight-bold">Rating:</span> {movie.vote_average} <span className="movie-rating font-weight-bold"><StarFill/></span></p> */}
               <p>
                 <span className="movie-overview font-weight-bold">
                   Overview:

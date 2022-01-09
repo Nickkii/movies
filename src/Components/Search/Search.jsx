@@ -1,88 +1,69 @@
+import React from "react";
+import { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Moment from "react-moment";
+
 const Search = () => {
-  return <></>;
+  const [query, setQuery] = useState("");
+
+  const [movies, setMovies] = useState([]);
+
+  const searchMovie = async (e) => {
+    e.preventDefault();
+
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=92c4a0b42d6e367bfd6cff01f712c1ab&query=${query}&page=1&include_adult=false`;
+
+    try {
+      const resultMovie = await fetch(url);
+      const data = await resultMovie.json();
+      console.log(data.results);
+      setMovies(data.results);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  return (
+    <>
+      <form className="d-flex input-group-lg" onSubmit={searchMovie}>
+        <input
+          className="form-control me-2"
+          type="search"
+          placeholder="Найти..."
+          aria-label="Search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        ></input>
+        <button className="btn btn-outline-success" type="submit">
+          Найти
+        </button>
+      </form>
+      <div className="card-list">
+        {movies.map((movie) => (
+          <>
+            <div className="searchCard" key={movie.id}>
+              <a href={`/movie/${movie.id}`}>
+                <img
+                  className="searchCardImg"
+                  src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${movie.poster_path}`}
+                />
+              </a>
+              <div className="movie-info">
+                <a href={`/movie/${movie.id}`}>
+                  <h4 className="movieName">{movie.title}</h4>
+                </a>
+                <p className="movieRating">
+                  <span>Рейтинг: {movie.vote_average}</span>
+                </p>
+                <p className="movieReleaseDate">
+                  <span>Дата выхода:</span>{" "}
+                  <Moment format="YYYY">{movie.release_date}</Moment>{" "}
+                </p>
+              </div>
+            </div>
+          </>
+        ))}
+      </div>
+    </>
+  );
 };
-
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import React from "react";
-// import axios from "axios";
-// import { useEffect, useState } from "react";
-// import CardMovie from "../CardMovie";
-
-// const Search = () => {
-//   const [movies, setMovies] = useState([]);
-//   const getMovies = () => {
-//     axios
-//       .get(
-//         "https://api.themoviedb.org/3/movie/550?api_key=92c4a0b42d6e367bfd6cff01f712c1ab"
-//       )
-//       .then((response) => {
-//         setMovies(response.data);
-//       });
-//   };
-//   useEffect(() => {
-//     getMovies();
-//   }, []);
-
-//   const [value, setValue] = useState("");
-
-//   const filteredMovies = movies.filter((movie) => {
-//     return movie.name.toLowerCase().includes(value.toLowerCase());
-//   });
-
-//   return (
-//     <>
-//       <nav className="navbar">
-//         <div className="container-fluid searchInput">
-//           <form className="d-flex input-group-lg">
-//             <input
-//               className="form-control me-2"
-//               type="search"
-//               placeholder="Найти..."
-//               aria-label="Search"
-//               onChange={(event) => setValue(event.target.value)}
-//             ></input>
-//             <button className="btn btn-outline-success" type="submit">
-//               Найти
-//             </button>
-//           </form>
-//         </div>
-//       </nav>
-//       <div className="searchMoviesList">
-//         {filteredMovies.map((movie, index) => {
-//           return (
-//             <>
-//               <CardMovie movie={movie} key={index} />
-//             </>
-//           );
-//         })}
-//       </div>
-//     </>
-//   );
-// };
-
-// const Search = (props) => {
-//   return (
-//     <>
-//       <nav className="navbar">
-//         <div className="container-fluid searchInput">
-//           <form className="d-flex input-group-lg">
-//             <input
-//               className="form-control me-2"
-//               type="search"
-//               placeholder="Найти..."
-//               aria-label="Search"
-//               value={props.value}
-//               // onChange={(event) => props.setSearch(event.target.value)}
-//               onChange={(event) => console.log(event.target.value)}
-//             ></input>
-//             <button className="btn btn-outline-success" type="submit">
-//               Найти
-//             </button>
-//           </form>
-//         </div>
-//       </nav>
-//     </>
-//   );
-// };
-
 export default Search;

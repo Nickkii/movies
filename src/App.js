@@ -2,7 +2,6 @@ import "./App.css";
 import React from "react";
 import Home from "./Components/Home";
 import Popular from "./Components/Popular";
-import CardMovie from "./Components/CardMovie";
 import DetailsMovie from "./Components/DetailsMovie";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 

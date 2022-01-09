@@ -43,7 +43,6 @@ const LastAdded = () => {
                 <span>Дата выхода:</span>{" "}
                 <Moment format="YYYY">{movie.release_date}</Moment>{" "}
               </p>
-              {/* <p><span>Краткое описание:</span> {movie.overview}</p> */}
             </div>
           </div>
         ))}
